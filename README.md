@@ -76,6 +76,26 @@ varu palūgt atrādīt.
 [10:18] Jānis Strauts: Kā jau rakstīju visu šo funkcionalitāti varam realizēt vienā klasē,
 bet varam veidot arī vairākas. Piem. Register, Login, Validate.
 16.12.2024
+16.12.2024 (1) - Faili, OOP
+[10:06] Jānis Strauts: Šodienas izaicinājums ir papildināt iepriekš izveidoto reģistrēšanās
+mehānismu ar iespēju izveidot un dzēst tēmas.
+[10:08] Jānis Strauts: Tātad pieslēdzoties jums jāizveido iespēju izveidot jaunu tēmu. Piem. "Kā
+pagatavot lasi".
+[10:09] Jānis Strauts: Savas tēmas ir jāspēj arī izdzēst, bet nevar izdzēst kāda cita izveidotu tēmu.
+[10:09] Jānis Strauts: Visas tēmas var redzēt visi
+[10:10] Jānis Strauts: arī tie kas nav pieslēgušies vai reģistrējušies
+[10:11] Jānis Strauts: Informāciju glabājam teksta failā
+[10:13] Jānis Strauts: Cenšamies protams izmantot OOP pieeju.
+[10:13] Janis: tas sanák kautkáds foruma tips cik saprotu
+[10:14] Jānis Strauts: Jā, tikai pagaidām bez komentāru pievienošanas
+[10:17] Jānis Strauts: Veidojot lietotāju piešķiram tam kaut kādu unikālu identifikātoru, tā pat
+daram arī ar tēmu izveidi.
+[10:17] Jānis Strauts: failā saglabājam arī izveides datumu
+
+18.12.2024 (3) / 19.12.2024 (4)
+Iesākto projektu no 13.12.2024 un 16.12.2024 papildināt ar iespēju pievienot komentāru
+izveidotajai tēmai. Komentāra autors komentāru var arī izdzēst. Failus organizējam, ka katrai
+tēmai ir savs komentāru failiņš.
 18.12.2024 / 19.12.2024
 Jāpapildina ar iespēju datus glabāt un nolasīt no MySQL datubāzes izmantojot PDO.
 Iepriekšējā funkcionalitāte ir jāsaglabā – jābūt parametram ar kuru būtu viegli pārslēgties no
