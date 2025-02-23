@@ -1,9 +1,5 @@
 # symfony_CRUD
-Simple php ( Symfony ) CRUD Blog web-app . 
-
-
-1 ) saprast kada struktura dir tree:
-
+Simple full-stack Blog web-app using PHP, html, css, mySQL, composer. 
 
 /simple-crud
 │── /app
@@ -37,7 +33,6 @@ Simple php ( Symfony ) CRUD Blog web-app .
 │── .gitignore
 │── composer.json
 │── README.md
-│── index.php
 
 
 # Requirements :
@@ -80,4 +75,4 @@ bet varam veidot arī vairākas. Piem. Register, Login, Validate.
 Jāpapildina ar iespēju datus glabāt un nolasīt no MySQL datubāzes izmantojot PDO.
 Iepriekšējā funkcionalitāte ir jāsaglabā – jābūt parametram ar kuru būtu viegli pārslēgties no
 saglabāšanas/nolasīšanas metodes (faili vai DB).
-Visus parametrus glabājam ‘.env’ failiņā. (45 teorijas lekcija)
+Visus parametrus glabājam ‘.env’ failiņā. (45 teorijas lekcija) .
