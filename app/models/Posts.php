@@ -1,4 +1,9 @@
-<?php 
+<?php
+
+namespace App\Models;
+
+use App\Core\Database;
+use PDO;
 
 class Posts
 {
@@ -36,7 +41,7 @@ class Posts
         return $data;
     }
 
-    public function create (array $data): string
+    public function create(array $data): string
     {
         $sql = "INSERT INTO posts (name, hidden) VALUES (:name, :hidden)";
         $stmt = $this->conn->prepare($sql);
@@ -49,7 +54,7 @@ class Posts
         return $this->conn->lastInsertId();
     }
 
-    public function update (string $id, array $data): int
+    public function update(string $id, array $data): int
     {
         $sql = "UPDATE posts
         SET name = :name, hidden = :hidden
@@ -65,5 +70,4 @@ class Posts
 
         return $stmt->rowCount();
     }
-
 }

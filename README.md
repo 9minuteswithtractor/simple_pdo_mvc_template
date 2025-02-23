@@ -10,7 +10,10 @@
 ├── public/             # Publicly accessible files
 │   ├── index.php       # app entry point
 │   ├── css/            # styles
+│   │   ├── style.css        # Main styles
+│   │   └── normalize.css    # CSS reset
 │   ├── js/             # scripts
+│   │   └── main.js         # JavaScript functionality
 │   └── .htaccess      # Apache configuration for public directory
 ├── database/           # Database files
 │   ├── migrations/
@@ -19,8 +22,7 @@
 ├── .vscode/           # VS Code configuration
 │   └── launch.json    # Debug configuration
 ├── .htaccess          # Main Apache configuration
-├── .env               # Environment variables
-├── .env.example       # Example environment file (template)
+├── .env.dev               # Development environment variables
 ├── .gitignore
 ├── composer.json
 └── README.md
@@ -52,7 +54,7 @@ xdebug.client_host=127.0.0.1  # Or your local IP address if not on localhost
 xdebug.client_port=9003
 xdebug.idekey=VSCODE
 
-// some issues in the past .... I had to do this :
+// PORT conf INFO :
 xdebug is spinning on localhost:9003 using Xdebug extension in VS Code.
 web server for php is running on localhost:80 using XAMPP + Apache
 MySQL is running on localhost:3306 using XAMPP + MySQL
@@ -142,8 +144,8 @@ saglabāšanas/nolasīšanas metodes (faili vai DB).
 Visus parametrus glabājam ‘.env’ failiņā. (45 teorijas lekcija) .
 
 
-// TODO ENV FILE :
-    .env 
+// TODO ENV variables :
+    .env.dev 
 APP_DEBUG=true
 BASE_URL=http://localhost/my-project/public
 

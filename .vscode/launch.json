@@ -10,7 +10,7 @@
       "pathMappings": { "${workspaceRoot}": "${workspaceRoot}" }
     },
     {
-      "name": "Launch php server",
+      "name": "Launch php server 🚀",
       "type": "php",
       "request": "launch",
       "runtimeArgs": [
@@ -35,7 +35,7 @@
   ],
   "compounds": [
     {
-      "name": "Launch Server & Debug 🚀",
+      "name": "Launch Server & Debug",
       "configurations": ["Launch php server", "Listen for Xdebug"]
     }
   ]

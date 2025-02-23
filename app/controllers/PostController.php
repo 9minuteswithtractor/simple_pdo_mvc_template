@@ -1,10 +1,12 @@
-<?php 
+<?php
 
-class PostController 
+namespace App\Controllers;
+
+use App\Models\Posts;
+
+class PostController
 {
-    public function __construct(private Posts $posts)
-    {       
-    }
+    public function __construct(private Posts $posts) {}
 
     public function router(string $method, ?string $id, string $resource): void
     {
@@ -24,7 +26,7 @@ class PostController
                     } else {
                         http_response_code(422); //Unprocessable Entity
                         echo json_encode(["errors" => "name is required"]);
-                    }                  
+                    }
                 } else {
                     http_response_code(405); //Method Not Allowed
                     header("Allow: GET, POST");
