@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Controllers\PostController;
+
 class Router
 {
     public static function router(string $method, ?string $id, string $resource): void
@@ -9,12 +11,16 @@ class Router
         if ($resource == "posts") {
             if ($id === null) {
                 if ($method == "GET") {
-                    require_once __DIR__ . '/../views/Home.php';
-                    // TODO create controller here
+                    // require_once __DIR__ . '/../views/Home.php';
+                    // TODO create controller for getAlll
+                    $controller = new PostController();
+                    $posts = $controller->getAll();
+
 
                     echo "Get all posts";
                 } elseif ($method == "POST") {
                     echo "Create post";
+                    // TODO create an controller for create
                 } else {
                     http_response_code(405); //Method Not Allowed
                     header("Allow: GET, POST");

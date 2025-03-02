@@ -8,19 +8,19 @@ ini_set("display_errors", "On");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 define('BASE_PATH', dirname(__DIR__));
-define('DEV_ENV_PATH', BASE_PATH . '/.env.dev');
+define('DEV_ENV_PATH', BASE_PATH . '/.env');
 
 
 
 // 2. Load environment variables before any application logic
 if (file_exists(DEV_ENV_PATH)) {
-    echo 'file exists ...';
-    $dotenv = Dotenv\Dotenv::createImmutable(DEV_ENV_PATH);
+    echo 'dev environment file exists ...';
+    $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH, '.env');
+    $dotenv->load();
 } else {
-    echo 'no file ..';
+    echo 'no .env file ..';
 }
-$dotenv->load();
-// $dotenv->safeLoad(); // for production
+
 
 
 // 3. Set headers (Must come BEFORE any echo, print, or HTML output)
@@ -32,8 +32,7 @@ session_start();
 // 5. Load Router
 use App\Core\Router;
 
-echo $env;
-exit;
+
 // Quick method validation
 if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
     header('HTTP/1.1 405 Method Not Allowed');
@@ -41,23 +40,16 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST', 'PUT', 'PATCH', 'DELET
 }
 
 
-echo '<pre />';
-echo $env;
-
-$baseUri = getenv('API_BASE_URL');
-
-
-
-
 // http://localhost/api/posts/1223
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $parts = explode('/', $path);
 
 $method = $_SERVER['REQUEST_METHOD'];
-$resource = $parts[3];      //posts
-$id = $parts[4] ?? null;    //id
+$resource = $parts[2];      //posts
+$id = $parts[3] ?? null;    //id
 
-
+// echo '<pre />';
+// print_r($parts);
 
 try {
     Router::router($method, $id, $resource);
