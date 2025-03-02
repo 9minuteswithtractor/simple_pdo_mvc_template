@@ -1,4 +1,4 @@
-USE simple_blog_db;
+USE simple_blog;
 
 INSERT INTO posts (hidden, name) VALUES 
     (FALSE, 'First Post'),
