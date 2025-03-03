@@ -181,11 +181,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 // Check the current environment and load the appropriate file
 $env = getenv('APP_ENV') ?: 'development'; // Default to 'development' if not set
 
-if ($env === 'production') {
-    $dotenv->overload('.env.production');
-} else {
-    $dotenv->load();  // Default to loading .env for development
-}
+
 
 // Now you can access the environment variables
 $baseUri = getenv('API_BASE_URL');

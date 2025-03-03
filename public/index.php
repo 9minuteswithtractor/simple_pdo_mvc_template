@@ -51,6 +51,9 @@ $id = $parts[3] ?? null;    //id
 // echo '<pre />';
 // print_r($parts);
 
+print_r($_SESSION);
+
+
 try {
     Router::router($method, $id, $resource);
 } catch (Throwable) {
