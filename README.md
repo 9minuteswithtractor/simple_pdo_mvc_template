@@ -69,7 +69,6 @@ zsh > `rlwrap mysql -u root -p`
     └── vlucas
 
 
-
 # prepare local web server and xdebug
 
 Check if php installed php -v
@@ -85,15 +84,17 @@ then install debugger:
 
 then install vs code extensions - "php debug" by xdebug and Php by DevSense
 
-
-php.ini file content (globally installed php php.ini file ...)
-[Xdebug]
+`echo phpinfo();` => add this on top ...
+;;;;;;;;;;;;;;;;;;;
+;      Debug      ;
+;;;;;;;;;;;;;;;;;;;
 zend_extension="xdebug.so"
 xdebug.mode=debug
 xdebug.start_with_request=yes
-xdebug.client_host=127.0.0.1  # Or your local IP address if not on localhost
 xdebug.client_port=9003
+xdebug.client_host=127.0.0.1
 xdebug.idekey=VSCODE
+
 
 // PORT conf INFO :
 xdebug is spinning on localhost:9003 using Xdebug extension in VS Code.

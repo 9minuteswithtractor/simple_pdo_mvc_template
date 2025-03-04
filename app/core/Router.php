@@ -7,9 +7,17 @@ use App\Controllers\PostController;
 
 class Router
 {
-    public static function router(string $method, ?string $id, string $resource): void
+
+    public function __construct(private Database $db)
     {
-        if ($resource == "posts") {
+        $this->db->getConnection();
+    }
+
+    public static function router(string $method, ?string $resource, ?string $id,): void
+    {
+        // TODO if resource === null => home view
+
+        if ($resource === "posts") {
             if ($id === null) {
                 if ($method == "GET") {
                     echo 'get all posts ...';
@@ -23,7 +31,7 @@ class Router
             } else {
                 switch ($method) {
                     case 'GET':
-                        echo "Get post id: $id";
+                        // echo "Get post id: $id";
                         break;
                     case 'PATCH':
                         echo "Update post id: $id";

@@ -6,7 +6,9 @@ ini_set("display_errors", "1");
 ini_set("display_startup_errors", "1");
 error_reporting(E_ALL);
 
-use App\Core\Database;
+// To check where is php.ini file for xDebug configuration
+// echo phpinfo();
+// exit;
 
 
 // 1. First require autoloader
@@ -32,9 +34,9 @@ header("Content-type: application/json; charset=UTF-8");
 // 4. Start session
 session_start();
 
-// 5. Load Router
-
-
+// 5. Load basics
+use App\Core\Database;
+use App\Core\Router;
 
 
 // Quick method validation
@@ -52,25 +54,33 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 // http://localhost/api/register/ => register           | POST
 
 
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$parts = explode('/', $path);
+// Front controller / router
+// TODO have to refactor to class / function
 
-$method = $_SERVER['REQUEST_METHOD'];
-$resource = $parts[2] ?? null;      //posts
-$id = $parts[3] ?? null;    //id
-
-
-// Front controller 
 try {
-    print_r($parts);
 
     $db = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
 
     if ($conn = $db->getConnection()) {
+
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        $parts = explode('/', $path); // url_arr
+        $resource = $parts[2] ?? null;      //posts
+        $id = $parts[3] ?? null;    //id
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        $router = new Router($db);
+        $router->router($method, $resource, $id);
+
+
+        print_r($parts);
+
         echo "connection success..";
-        exit;
+        // exit;
+
+
     }
-    echo 'something went wrong ...';
 } catch (Throwable $e) {
     http_response_code(500); // server error
     echo $e; // print out the error information
