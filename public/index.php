@@ -71,16 +71,8 @@ try {
         $id = $parts[3] ?? null;    //id
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $router = new Router($db);
+        $router = new Router();
         $router->router($path, $method, $resource, $id);
-
-
-        print_r($parts);
-
-        echo "connection success..";
-        // exit;
-
-
     }
 } catch (Throwable $e) {
     http_response_code(500); // server error

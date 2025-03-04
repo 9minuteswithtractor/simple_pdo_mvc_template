@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-use App\Models\Posts;
-
 // session continue
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -11,30 +9,31 @@ if (session_status() === PHP_SESSION_NONE) {
 
 use App\Controllers\PostController;
 use App\Core\Database;
-use PDO;
+
 
 class Router
 {
 
-    public function __construct(private Database $db)
+    public function __construct()
     {
-        $db->getConnection();
+        echo 'Router created';
     }
 
     public static function router(string $path, string $method, ?string $resource, ?string $id,): void
     {
-        echo 'request_method: ' . $path;
-        echo 'formatted_path: ' . $path;
-        echo PHP_EOL;
-        echo 'Uri: ' . $_SERVER['REQUEST_URI'];
-        echo PHP_EOL;
-        echo 'base_url: ' . $_ENV['BASE_URL'];
-        echo PHP_EOL;
-        echo 'base_api_url:' . $_ENV['API_BASE_URL'];
-        echo PHP_EOL;
-        echo '##########################################';
-        echo PHP_EOL;
-        echo PHP_EOL;
+        // echo 'request_method: ' . $path;
+        // echo 'formatted_path: ' . $path;
+        // echo PHP_EOL;
+        // echo 'Uri: ' . $_SERVER['REQUEST_URI'];
+        // echo PHP_EOL;
+        // echo 'base_url: ' . $_ENV['BASE_URL'];
+        // echo PHP_EOL;
+        // echo 'base_api_url:' . $_ENV['API_BASE_URL'];
+        // echo PHP_EOL;
+        // echo '##########################################';
+        // echo PHP_EOL;
+        // echo PHP_EOL;
+
 
         // TODO if resource === null => home view
         if ($path == '/') {
@@ -43,18 +42,10 @@ class Router
                 'status' => 'success',
                 'user' => $mode
             ]);
-            $posts = new Posts();
 
+            PostController::index();
             http_response_code(200);
             exit;
-
-            // } elseif ($resource === null) {
-            //     http_response_code(200);
-            //     $mode = $_SESSION['user'] = 'guest';
-            //     echo json_encode([
-            //         'status' => 'success',
-            //         'user' => $mode
-            //     ]);
         } elseif ($resource === "posts") {
             if ($id === null) {
                 if ($method == "GET") {

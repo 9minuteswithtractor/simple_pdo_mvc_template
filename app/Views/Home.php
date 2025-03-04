@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 
 <body>
-    <h1>Home</h1>
+    <h1>Welcome to Blog Home Page!</h1>
 </body>
 
 </html>
