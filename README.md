@@ -83,7 +83,7 @@ then install debugger:
 `pecl install xdebug`
 
 then install vs code extensions - "php debug" by xdebug and Php by DevSense
-
+€
 `echo phpinfo();` => add this on top ...
 ;;;;;;;;;;;;;;;;;;;
 ;      Debug      ;

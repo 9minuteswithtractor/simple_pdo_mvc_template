@@ -47,8 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 // ENDPOINTS :
-// http://localhost/ => Home                            | GET
-// http://localhost/api/posts/ => All posts             | GET | POST
+// GET => http://localhost:PORT_NUMBER =>  HOME_PAGE view
+
+// http://localhost/api/posts/ => get all_posts | create          | GET | POST
 // http://localhost/api/posts/1223 => Specific post     | GET | PATCH | DELETE
 // http://localhost/api/login/ => login                 | POST
 // http://localhost/api/register/ => register           | POST
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 try {
 
-    $db = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+    $db = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_PORT']);
 
     if ($conn = $db->getConnection()) {
 
@@ -71,7 +72,7 @@ try {
         $method = $_SERVER['REQUEST_METHOD'];
 
         $router = new Router($db);
-        $router->router($method, $resource, $id);
+        $router->router($path, $method, $resource, $id);
 
 
         print_r($parts);

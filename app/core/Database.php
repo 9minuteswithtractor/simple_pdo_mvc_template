@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+
+
 use PDO;
 
 class Database
@@ -12,7 +14,8 @@ class Database
         private string $host,
         private string $name,
         private string $user,
-        private string $password
+        private string $password,
+        private string $port
     ) {}
 
     public function getConnection(): PDO
@@ -21,7 +24,7 @@ class Database
             // $dsn = "mysql:host=$this->host;dbname=$this->name;charset=utf8";
             // $dsn = "mysql:host=localhost;dbname=$this->name;charset=utf8";
             // $dsn = "mysql:host=127.0.0.1;dbname=$this->name;charset=utf8";
-            $dsn = "mysql:host=127.0.0.1;port=3306;dbname={$this->name};charset=utf8";
+            $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->name};charset=utf8";
 
 
 
