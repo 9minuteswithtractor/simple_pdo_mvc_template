@@ -1,11 +1,29 @@
 # simple_crud_app
 ***Simple full-stack blog web-app using PHP, html, css, mySQL, composer.***
 
-SERVERS_AND_PORTS
-for php server : php -S localhost:8080
-for mysql server : mysql.server start (:3306)
-                   mysql -u root -p 
-for Web server : Xampp Apache (:80)
+### *SERVERS_AND_PORTS*:
+> for php server : php -S localhost:8080
+
+> for mysql server : mysql.server start (:3306) 
+>
+> mysql -u root -p 
+
+> for Web server : Xampp Apache (:80)
+
+## *DATABASE* :
+
+    zsh > mysqladmin -u root -p ping
+    zsh > sudo lsof -iTCP -sTCP:LISTEN -n -P | grep mysql
+
+    mysql > help => display commands ...
+    mysql > status => display status info
+    mysql > quit => exits
+    
+## *ADDITIONAL_BONUS*
+zsh > `brew install rlwrap`
+
+zsh > `rlwrap mysql -u root -p`
+
 
 
 ## Project-Tree

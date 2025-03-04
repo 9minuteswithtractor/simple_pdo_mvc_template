@@ -21,7 +21,8 @@ class Database
             // $dsn = "mysql:host=$this->host;dbname=$this->name;charset=utf8";
             // $dsn = "mysql:host=localhost;dbname=$this->name;charset=utf8";
             // $dsn = "mysql:host=127.0.0.1;dbname=$this->name;charset=utf8";
-            $dsn = "mysql:host=localhost;port=3306;dbname=simple_blog;charset=utf8";
+            $dsn = "mysql:host=127.0.0.1;port=3306;dbname={$this->name};charset=utf8";
+
 
 
 
