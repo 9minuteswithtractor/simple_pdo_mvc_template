@@ -9,18 +9,32 @@ if (session_status() === PHP_SESSION_NONE) {
 
 use App\Controllers\PostController;
 use App\Core\Database;
-
+use PhpMyAdmin\VersionInformation;
 
 class Router
 {
 
     public function __construct()
     {
-        echo 'Router created';
+        // echo 'Router created';
     }
 
-    public static function router(string $path, string $method, ?string $resource, ?string $id,): void
+
+    public static function route(): void
     {
+        // TODO can these values be passed as private default values in Database class
+        $db = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_PORT']);
+
+        if ($conn = $db->getConnection()) {
+            $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $parts = explode('/', $path); // url_arr
+
+            $method = $_SERVER['REQUEST_METHOD'];
+            $resource = $parts[2] ?? null;      //posts
+            $id = $parts[4] ?? null;    // id
+        }
+
+
         // echo 'request_method: ' . $path;
         // echo 'formatted_path: ' . $path;
         // echo PHP_EOL;
