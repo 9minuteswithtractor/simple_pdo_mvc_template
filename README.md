@@ -37,29 +37,36 @@ zsh > `rlwrap mysql -u root -p`
 
 ## Project-Tree
 /simple_crud
-├── app/                 # Application code
-│   ├── Controllers/
-│   ├── Models/
-│   └── ...
-├── public/             # Publicly accessible files
-│   ├── index.php       # app entry point
-│   ├── css/            # styles
-│   │   ├── style.css        # Main styles
-│   │   └── normalize.css    # CSS reset
-│   ├── js/             # scripts
-│   │   └── main.js         # JavaScript functionality
-│   └── .htaccess      # Apache configuration for public directory
-├── database/           # Database files
-│   ├── migrations/
-│   └── seeds/
-├── vendor/             # Composer dependencies
-├── .vscode/           # VS Code configuration
-│   └── launch.json    # Debug configuration
-├── .htaccess          # Main Apache configuration
-├── .env.dev               # Development environment variables
+.
+├── README.md
+├── .env
 ├── .gitignore
+├── .git
+├── app
+│   ├── Controllers
+│   ├── Core
+│   ├── Models
+│   ├── Routes
+│   └── Views
 ├── composer.json
-└── README.md
+├── composer.lock
+├── database
+│   ├── migrations
+│   └── seeds
+├── public
+│   ├── css
+│   ├── index.php
+│   ├── js
+│   └── phpmyadmin
+├── storage
+│   └── local
+└── vendor
+    ├── autoload.php
+    ├── composer
+    ├── graham-campbell
+    ├── phpoption
+    ├── symfony
+    └── vlucas
 
 
 
