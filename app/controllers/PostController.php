@@ -4,14 +4,8 @@ namespace App\Controllers;
 
 use App\Models\Posts;
 
-class PostController extends Posts
+
+class PostController
 {
-    public function __construct() {}
-
-    public function index(): array
-    {
-        $posts = $this->getAll();
-
-        return $posts;
-    }
+    public function __construct(private Posts $posts) {}
 }
