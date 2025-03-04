@@ -19,10 +19,13 @@ class PostController
     public static function index()
     {
 
-        // $posts = new Posts();
+        // echo '<pre>';
+        $info = [
+            'env' => $_ENV,
+            'session' => $_SESSION,
+            'cookie' => $_COOKIE
+        ];
 
-        echo '<pre />';
-        echo json_encode(['message' => 'Hello from Home Page']);
         header('Content-Type: text/html');
         include BASE_PATH . '/app/Views/Home.php';
     }

@@ -52,13 +52,9 @@ class Router
         // TODO if resource === null => home view
         if ($path == '/') {
             $mode = $_SESSION['user'] = 'guest';
-            echo json_encode([
-                'status' => 'success',
-                'user' => $mode
-            ]);
-
-            PostController::index();
+            $logged_in = $_SESSION['logged_in'] = 0;
             http_response_code(200);
+            PostController::index();
             exit;
         } elseif ($resource === "posts") {
             if ($id === null) {

@@ -16,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; ">
     <h1>🚩Error 500 (failed database connection)🚩</h1>
-    <p><?= $e->getMessage() ?></p>
+    <p><?= $error->getMessage() ?></p>
 
 </body>
 

@@ -27,7 +27,7 @@ class App
             if ($this->db->getConnection()) {
                 $this->router->route();
             };
-        } catch (Throwable $e) {
+        } catch (Throwable $error) {
             http_response_code(500);
             header('Content-Type: text/html');
             include BASE_PATH . '/app/Views/500.php';
