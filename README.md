@@ -6,6 +6,7 @@
 
 > for mysql server : mysql.server start (:3306) 
 >
+> mysql -h 127.0.0.1 -P 3306 -u root -p
 > mysql -u root -p 
 
 > for Web server : Xampp Apache (:80)
@@ -18,6 +19,14 @@
     mysql > help => display commands ...
     mysql > status => display status info
     mysql > quit => exits
+
+## *`SQL_ABC`*
+
+    SHOW DATABASES;
+    USE database_name;
+    SHOW TABLES;
+
+    mysql > DESCRIBE table_name;
     
 ## *ADDITIONAL_BONUS*
 zsh > `brew install rlwrap`

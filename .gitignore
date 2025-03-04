@@ -1,3 +1,5 @@
+#phpmyadmin
+/public/phpmyadmin
 
 # Managed by Composer
 /app/bootstrap.php.cache
