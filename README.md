@@ -1,6 +1,13 @@
 # simple_crud_app
 ***Simple full-stack blog web-app using PHP, html, css, mySQL, composer.***
 
+SERVERS_AND_PORTS
+for php server : php -S localhost:8080
+for mysql server : mysql.server start (:3306)
+                   mysql -u root -p 
+for Web server : Xampp Apache (:80)
+
+
 ## Project-Tree
 /simple_crud
 ├── app/                 # Application code
