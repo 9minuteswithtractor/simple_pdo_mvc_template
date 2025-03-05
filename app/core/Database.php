@@ -8,7 +8,7 @@ use PDO;
 
 class Database
 {
-    private ?PDO $conn = null;
+    protected ?PDO $conn = null;
 
     public function __construct(
         private string $host,
@@ -18,7 +18,7 @@ class Database
         private string $port
     ) {}
 
-    public function getConnection(): PDO
+    public  function getConnection(): PDO
     {
         if ($this->conn === null) {
             // $dsn = "mysql:host=$this->host;dbname=$this->name;charset=utf8";

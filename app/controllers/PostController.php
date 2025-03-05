@@ -3,28 +3,34 @@
 namespace App\Controllers;
 
 use App\Core\Database;
+use App\Models\Posts;
 
 
 
 class PostController
 {
-
+    private $db;
     public function __construct(Database $db)
     {
-        $db->getConnection();
-        // echo 'PostController created';
+        $this->db = $db;
     }
 
 
-    public static function index()
+    public static function index(Database $db)
     {
 
-        // echo '<pre>';
+        $postModel = new Posts($db);
+
         $info = [
             'env' => $_ENV,
             'session' => $_SESSION,
-            'cookie' => $_COOKIE
+            'cookie' => $_COOKIE,
         ];
+
+        $user = $_SESSION['user'];
+
+        $posts = $postModel->getAll();
+
 
         header('Content-Type: text/html');
         include BASE_PATH . '/app/Views/Home.php';

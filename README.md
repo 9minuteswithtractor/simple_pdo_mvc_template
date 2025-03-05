@@ -39,14 +39,10 @@ zsh > `rlwrap mysql -u root -p`
 /simple_crud
 .
 ├── README.md
-├── .env
-├── .gitignore
-├── .git
 ├── app
 │   ├── Controllers
 │   ├── Core
 │   ├── Models
-│   ├── Routes
 │   └── Views
 ├── composer.json
 ├── composer.lock

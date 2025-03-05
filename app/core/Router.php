@@ -20,46 +20,26 @@ class Router
     }
 
 
-    public static function route(): void
+    public static function route(Database $db): void
     {
-        // TODO can these values be passed as private default values in Database class
-        $db = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_PORT']);
 
-        if ($conn = $db->getConnection()) {
-            $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            $parts = explode('/', $path); // url_arr
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $parts = explode('/', $path); // url_arr
 
-            $method = $_SERVER['REQUEST_METHOD'];
-            $resource = $parts[2] ?? null;      //posts
-            $id = $parts[4] ?? null;    // id
-        }
+        $method = $_SERVER['REQUEST_METHOD'];
+        $resource = $parts[2] ?? null;      //posts , null as index (home)
+        $id = $parts[4] ?? null;    // id
 
 
-        // echo 'request_method: ' . $path;
-        // echo 'formatted_path: ' . $path;
-        // echo PHP_EOL;
-        // echo 'Uri: ' . $_SERVER['REQUEST_URI'];
-        // echo PHP_EOL;
-        // echo 'base_url: ' . $_ENV['BASE_URL'];
-        // echo PHP_EOL;
-        // echo 'base_api_url:' . $_ENV['API_BASE_URL'];
-        // echo PHP_EOL;
-        // echo '##########################################';
-        // echo PHP_EOL;
-        // echo PHP_EOL;
-
-
-        // TODO if resource === null => home view
-        if ($path == '/') {
+        if ($path === '/' or $path === '/posts') {
             $mode = $_SESSION['user'] = 'guest';
             $logged_in = $_SESSION['logged_in'] = 0;
             http_response_code(200);
-            PostController::index();
+            PostController::index($db);
             exit;
         } elseif ($resource === "posts") {
             if ($id === null) {
                 if ($method == "GET") {
-                    echo 'get all posts ...';
                 } elseif ($method == "POST") {
                     echo "Create post";
                     // TODO create an controller for create
