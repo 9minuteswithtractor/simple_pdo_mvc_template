@@ -10,7 +10,6 @@ require_once BASE_PATH . '/vendor/autoload.php';
 
 class App
 {
-
     private Database $db;
     private Router $router;
 
@@ -29,13 +28,13 @@ class App
             } else {
                 http_response_code(500);
                 header('Content-Type: text/html');
-                include BASE_PATH . '/app/Views/500.php';
+                require_once BASE_PATH . '/app/Views/500.php';
                 exit;
             }
         } catch (Throwable $error) {
             http_response_code(500);
             header('Content-Type: text/html');
-            include BASE_PATH . '/app/Views/500.php';
+            require_once BASE_PATH . '/app/Views/500.php';
             exit;
         }
     }

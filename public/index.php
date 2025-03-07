@@ -6,6 +6,9 @@ ini_set("display_errors", "1");
 ini_set("display_startup_errors", "1");
 error_reporting(E_ALL);
 
+// shorter version for method validation ( don't gives feedback tho)
+// header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
+
 
 // 1. First require autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -34,13 +37,17 @@ session_start();
 use App\Core\App;
 
 
-// Quick method validation
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    header($_SERVER["SERVER_PROTOCOL"] . "405 Method Not Allowed");
-    header('Allow: GET');
+// simple method pre-check
+$allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE'];
+if (!in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
+    http_response_code(405);
+
+    header('Allow: GET, POST, PATCH, DELETE');
+    // require_once BASE_PATH . '/app/Views/405.php';
+    header('Content-Type: text/html');
+    require_once BASE_PATH . '/app/Views/405.php';
     exit;
 }
-
 
 // App entry point 
 try {

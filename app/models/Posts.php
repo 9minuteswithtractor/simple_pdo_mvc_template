@@ -17,6 +17,8 @@ class Posts
     public function getAll(): array
     {
         $sql = "SELECT * FROM posts";
+
+
         $stmt = $this->conn->query($sql);
         // return $stmt->fetchAll(PDO::FETCH_ASSOC);
 

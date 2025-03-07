@@ -16,6 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME | BLOG</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
 </head>
 
 <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100vw;">
@@ -26,27 +27,35 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div style="display: flex; border: 2px solid black;padding: 0.1rem; width: 70vw;">
         <input type="button" value="toggle_session_info" onclick="document.querySelector('p').toggleAttribute('hidden')" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
-        <input type="button" value="clear_session" onclick=window.location.reload();<?= session_destroy(); ?> style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
+        <input type="button" value="clear_session" onclick="destroySession()" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
         <p hidden style="margin: 50px 50px;"><?= print_r($info) ?></p>
     </div>
     <h2>Hello, <span style="color:green;"><?= htmlspecialchars($user) ?></span>!</h2>
-    <h2><span style="color:darkorange;">></span> Latest content {</h2>
-    <ul>
-        <?php foreach ($posts as $post) : ?>
-            <div style="border: 2px solid black; padding: 25px;">
+    <h2><span style="color:darkorange;">></span> Latest content</h2>
+    <div style="border: 2px solid black; padding: 25px;">
+        <ul style="list-style: none;">
+            <?php foreach ($posts as $post) : ?>
                 <li>
-                    <a href="/posts/<?= $post['id'] ?>"><?= htmlspecialchars($post['title']); ?></a>
-                    <p><?= htmlspecialchars($post['content']); ?></p>
-                    <p><?= htmlspecialchars($post['date_created']); ?></p>
-                    <hr>
 
-
+                    <form action="<?php '/posts'; ?>" method="DELETE" onsubmit="return confirm('Your post is going to be deleted ...'); <?php  ?> ">
+                        <a href="/posts/<?= $post['id'];
+                                        ?>"><?= htmlspecialchars($post['title']); ?></a>
+                        <p><?= htmlspecialchars($post['content']); ?></p>
+                        <p>author : <span style="color: green; font-weight: bold;"><?= htmlspecialchars($post['author']); ?></span></p>
+                        <p><?= htmlspecialchars($post['date_created']); ?></p>
+                        <input type="submit" name="<?= $post['id']; ?>" value="delete" style="cursor: pointer;">
+                        <hr>
+                    </form>
                 </li>
-            </div>
-        <?php endforeach; ?>
 
-    </ul>
-    <h2>}</h2>
+            <?php endforeach; ?>
+
+        </ul>
+    </div>
+
+    <script>
+
+    </script>
 </body>
 
 </html>

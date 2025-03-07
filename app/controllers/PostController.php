@@ -16,7 +16,7 @@ class PostController
     }
 
 
-    public static function index(Database $db)
+    public static function index(Database $db): void
     {
 
         $postModel = new Posts($db);
@@ -32,7 +32,10 @@ class PostController
         $posts = $postModel->getAll();
 
 
+
+
+
         header('Content-Type: text/html');
-        include BASE_PATH . '/app/Views/Home.php';
+        require_once BASE_PATH . '/app/Views/Home.php';
     }
 }
