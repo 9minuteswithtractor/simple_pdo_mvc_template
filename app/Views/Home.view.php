@@ -1,12 +1,18 @@
 <?php
 
-
+use App\Core\Helper;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 
+// ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___ISSUE
+// BUG => cannot unset $_COOKIE['session_token'] -> see Helper::destroySession
+// ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___end_ISSUE
+
+
+// TODO Auth [Holy] : =>   
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +33,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div style="display: flex; border: 2px solid black;padding: 0.1rem; width: 70vw;">
         <input type="button" value="toggle_session_info" onclick="document.querySelector('p').toggleAttribute('hidden')" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
-        <input type="button" value="clear_session" onclick="destroySession()" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
+        <input type="button" value="clear_session" onclick="destroySession();" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
         <p hidden style="margin: 50px 50px;"><?= print_r($info) ?></p>
     </div>
     <h2>Hello, <span style="color:green;"><?= htmlspecialchars($user) ?></span>!</h2>
@@ -54,7 +60,19 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
 
     <script>
-
+        function destroySession() {
+            // Send a POST request to clear the session and cookies
+            axios.post('/api/clear_session')
+                .then(response => {
+                    // You can handle the response here if needed
+                    alert('Session cleared and cookies destroyed!');
+                    // Optionally, reload the page
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('There was an error clearing the session:', error);
+                });
+        }
     </script>
 </body>
 

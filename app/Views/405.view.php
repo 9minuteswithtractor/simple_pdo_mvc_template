@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 
 <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; ">
-    <h1>🚩Error 405 (Bad Request)🚩</h1>
+    <h1>🚩Error 404/405 (Bad Request)🚩</h1>
 
 </body>
 

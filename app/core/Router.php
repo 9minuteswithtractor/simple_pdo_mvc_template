@@ -7,7 +7,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-use App\Core\Helper;
 use App\Core\Database;
 use App\Controllers\PostController;
 
@@ -18,6 +17,7 @@ class Router
     public function __construct()
     {
         // echo 'Router created';
+
     }
 
 
@@ -38,24 +38,42 @@ class Router
         $id = $parts[4] ?? null;  // id
 
 
+        // print_r($parts);
+        // echo '<br />';
+        // echo 'path: ' . $path;
+        // echo '<br />';
+        // echo 'resource: ' . $resource;
+        // echo '<br />';
+
         if ($path === '/' or $path === '/posts') {
             if ($method === 'GET') {
-                // guest_mode session ...
+                // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___GUEST_MODE
                 $mode = $_SESSION['user'] = 'guest';
                 $logged_in = $_SESSION['logged_in'] = 0;
-                echo $_SERVER['HTTP_HOST'];
-                if (Helper::setSecureCookie()) {
-                    echo json_encode($_COOKIE);
-                };
-                // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___end_comment
+                $db_storage = $_SESSION['db_storage'] =  $_ENV['STORAGE_TYPE'];
+
+                // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-.::___GUEST_MODE_END
 
 
-
-
-                http_response_code(200);
-                PostController::index($db);
-                exit;
-            } elseif ($method === 'POST') {
+                if (!isset($_COOKIE['guest_session_token'])) {
+                    echo PHP_EOL;
+                    echo $_SESSION['user'] . ' has been logged out ...';
+                    // Generate API key
+                    $api_key = bin2hex(random_bytes(32));
+                    // Set the secure cookie (valid for 1 hour)
+                    setcookie('guest_session_token', $api_key, [
+                        'expires' => time() + 3600, // 1 hour
+                        'path' => '/',
+                        'domain' => '',
+                        'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                        'httponly' => true,
+                        'samesite' => 'Strict'
+                    ]);
+                    echo PHP_EOL;
+                    echo "New API Key Set: " . $api_key;
+                } else {
+                    PostController::index($db);
+                }
             }
         } elseif ($resource === "posts") {
             if ($id === null) {
@@ -83,9 +101,14 @@ class Router
                         header("Allow: GET, PATCH, DELETE");
                 }
             }
+        } elseif ($resource ===  'clear_session' && $method === 'POST') {
+            setcookie('guest_session_token', '', time() - 3600, '/');
+            header('Location: /');
         } else {
             http_response_code(404);
-            exit;
+            header('Content-Type: text/html');
+            require_once BASE_PATH . '/app/Views/405.view.php';
+            // echo "404 - Not found";
         }
     }
 }

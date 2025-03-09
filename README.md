@@ -98,15 +98,23 @@ web server for php is running on localhost:80 using XAMPP + Apache
 MySQL is running on localhost:3306 using XAMPP + MySQL
 Database management tool: localhost:80/phpMyAdmin
 
+## COOKIES & SESSIONS
+
+
 
 ## // Restful API (REST API uses RESTful URLs) - recommended practice
+// POST     /api/clear_session   - session_destroy() + unset($_COOKIE['session_token']);
 
-// GET      /api/products       - get all products
-// GET      /api/products/1223  - get product (id: 1223)
-// POST     /api/products       - create product
-// DELETE   /api/products/1223   - delete product (id: 1223)
-// PUT      /api/products/1223   - update product with new product (id: 1223)
-// PATCH    /api/products/1223   - update product details (id: 1223)
+// PRODUCT_RELATED
+// GET      /api/posts        - get all posts
+// POST     /api/posts        - create post
+// GET      /api/posts/1223   - get post (id: 1223)
+// DELETE   /api/posts/1223   - delete post (id: 1223)
+// DELETE   /api/posts/       - delete post (id: 1223)
+// PUT      /api/posts/1223   - update post with new post (id: 1223)
+// PATCH    /api/posts/1223   - update post details (id: 1223) || :: => maybe not ...
+
+// USER_RELATED
 
 
 .htaccess
@@ -127,7 +135,7 @@ Database management tool: localhost:80/phpMyAdmin
 // php -S localhost:8080
 
 
-// TODO : Have to go through this blob below :
+
 # App requirements :
 Iepriekšējais uzdevums, kuru apraksts atrodas šajās lekcijās:
 **13.12.2024**
@@ -182,8 +190,8 @@ saglabāšanas/nolasīšanas metodes (faili vai DB).
 Visus parametrus glabājam ‘.env’ failiņā. (45 teorijas lekcija) .
 
 
-// TODO ENV variables :
-    .env.dev 
+
+    .env
 APP_DEBUG=true
 BASE_URL=http://localhost/my-project/public
 
@@ -226,3 +234,6 @@ $baseUri = getenv('API_BASE_URL');
 
 echo $baseUri;
 ```
+
+// Auth ::
+

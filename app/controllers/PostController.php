@@ -27,15 +27,13 @@ class PostController
             'cookie' => $_COOKIE,
         ];
 
+
         $user = $_SESSION['user'];
 
         $posts = $postModel->getAll();
 
 
-
-
-
         header('Content-Type: text/html');
-        require_once BASE_PATH . '/app/Views/Home.php';
+        require_once BASE_PATH . '/app/Views/Home.view.php';
     }
 }

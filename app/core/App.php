@@ -24,6 +24,8 @@ class App
     {
         try {
             if ($this->db->getConnection()) {
+                define('API_BASE_URL', $_ENV['API_BASE_URL']);
+                define('BASE_URL', $_ENV['BASE_URL']);
                 $this->router->route($this->db);
             } else {
                 http_response_code(500);
@@ -34,7 +36,13 @@ class App
         } catch (Throwable $error) {
             http_response_code(500);
             header('Content-Type: text/html');
-            require_once BASE_PATH . '/app/Views/500.php';
+
+            // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___ERROR_ENDPOINT
+            // TODO: add error API endpoint ???
+            // header('Location: /error');
+            // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___END_COMMENT
+
+            require_once BASE_PATH . '/app/Views/500.view.php';
             exit;
         }
     }

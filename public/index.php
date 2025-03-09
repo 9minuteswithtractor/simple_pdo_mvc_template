@@ -17,6 +17,7 @@ define('BASE_PATH', dirname(__DIR__));
 define('DEV_ENV_PATH', BASE_PATH . '/.env');
 
 
+
 // 2. Load environment variables before any application logic
 if (file_exists(DEV_ENV_PATH)) {
     $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
@@ -24,6 +25,7 @@ if (file_exists(DEV_ENV_PATH)) {
     $dotenv->load();
 } else {
     http_response_code(500);
+    require_once BASE_PATH . '/app/Views/500.view.php';
     die('No .env file found ...');
 }
 
@@ -38,11 +40,11 @@ use App\Core\App;
 
 
 // simple method pre-check
-$allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE'];
+$allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'];
 if (!in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
     http_response_code(405);
 
-    header('Allow: GET, POST, PATCH, DELETE');
+    header('Allow: GET, POST, PATCH, DELETE, OPTIONS');
     // require_once BASE_PATH . '/app/Views/405.php';
     header('Content-Type: text/html');
     require_once BASE_PATH . '/app/Views/405.php';
