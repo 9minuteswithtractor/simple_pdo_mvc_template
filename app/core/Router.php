@@ -104,14 +104,100 @@ class Router
             }
         } elseif ($resource === 'login') {
             switch ($method) {
-                case 'POST':
-                case  'GET':
+                case 'GET':
                     header('Content-Type: text/html');
                     require_once BASE_PATH . '/app/Views/Login.view.php';
                     break;
+                case 'POST':
+                    // Handle login
+                    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+                        $username = $_POST['username'];
+                        $password = $_POST['password'];
+
+
+                        // Example: Authenticate user (replace with actual authentication logic)
+
+                        if ($username === 'admin' && $password === 'password') { // Replace with real auth check
+                            $_SESSION['user'] = $username;
+                            $_SESSION['logged_in'] = 1;
+
+                            // Set session token for authentication
+                            $api_key = bin2hex(random_bytes(32));
+                            setcookie('session_token', $api_key, [
+                                'expires' => time() + 3600, // 1 hour
+                                'path' => '/',
+                                'domain' => '',
+                                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                                'httponly' => true,
+                                'samesite' => 'Strict'
+                            ]);
+
+                            echo json_encode([
+                                "message" => "Login successful",
+                                "user" => $_SESSION['user'],
+                                "logged_in" => $_SESSION['logged_in']
+                            ]);
+                        } else {
+                            echo json_encode(["error" => "Invalid credentials"]);
+                        }
+                    } else {
+                        $error = "Please fill in both username and password.";
+                        require_once BASE_PATH . '/app/Views/Login.view.php';
+                    }
+                    break;
                 default:
                     http_response_code(405);
-                    header("Allow: POST");
+                    header("Allow: GET, POST");
+                    header('Content-Type: text/html');
+                    require_once BASE_PATH . '/app/Views/405.view.php';
+            }
+        } elseif ($resource === 'register') {
+            switch ($method) {
+                case 'GET':
+                    header('Content-Type: text/html');
+                    require_once BASE_PATH . '/app/Views/Register.view.php';
+                    break;
+                case 'POST':
+                    // Handle register
+                    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+                        $username = $_POST['username'];
+                        $password = $_POST['password'];
+                        $email = $_POST['email'];
+
+                        // Example: Authenticate user (replace with actual authentication logic)
+                        // 1. fetch-all-users
+                        // 2. if not in list -> add-user
+
+                        if ($username === 'admin' && $password === 'password') { // Replace with real auth check
+                            $_SESSION['user'] = $username;
+                            $_SESSION['logged_in'] = 1;
+
+                            // Set session token for authentication
+                            $api_key = bin2hex(random_bytes(32));
+                            setcookie('session_token', $api_key, [
+                                'expires' => time() + 3600, // 1 hour
+                                'path' => '/',
+                                'domain' => '',
+                                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                                'httponly' => true,
+                                'samesite' => 'Strict'
+                            ]);
+
+                            echo json_encode([
+                                "message" => "Login successful",
+                                "user" => $_SESSION['user'],
+                                "logged_in" => $_SESSION['logged_in']
+                            ]);
+                        } else {
+                            echo json_encode(["error" => "Invalid credentials"]);
+                        }
+                    } else {
+                        echo json_encode(["error" => "Username and password are required"]);
+                    }
+                    break;
+                default:
+                    http_response_code(405);
+                    header("Allow: GET, POST");
                     header('Content-Type: text/html');
                     require_once BASE_PATH . '/app/Views/405.view.php';
             }

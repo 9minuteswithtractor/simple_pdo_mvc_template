@@ -4,6 +4,8 @@
 namespace App\Controllers;
 
 use App\Core\Database;
+use App\Models\Users;
+
 
 class Auth
 {
@@ -14,8 +16,8 @@ class Auth
     }
 
 
-    public function login(): void
+    public static function login(): void
     {
-        // $user = new User($this->db);
+        $user = new Users(self::$db);
     }
 }

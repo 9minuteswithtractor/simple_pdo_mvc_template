@@ -7,13 +7,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-// ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___ISSUE
-// BUG => cannot unset $_COOKIE['session_token'] -> see Helper::destroySession
-// ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___end_ISSUE
-
-
-// TODO Auth [Holy] : =>   
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +20,13 @@ if (session_status() === PHP_SESSION_NONE) {
     <style>
         .title {
             text-transform: uppercase;
-            width: min-content;
 
+
+        }
+
+        .post-content {
+            font-size: larger;
+            max-width: 50%
         }
 
         .content {
@@ -47,36 +45,36 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <?= '<pre>' ?>
 
-    <div style="display: flex; border: 2px solid black;padding: 0.1rem; width: 70vw;">
+    <div style="width: 100%; min-width: 320px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center">
         <input type="button" value="toggle_session_info" onclick="document.querySelector('p').toggleAttribute('hidden')" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
         <input type="button" value="clear_session" onclick="destroySession();" style="cursor: pointer; padding: 0.5rem; border-radius: 5px; font-size: medium;">
         <p hidden style="margin: 50px 50px;"><?= print_r($info) ?></p>
     </div>
     <div style="display: flex; padding: 0.1rem; width: 70vw; align-items: center; justify-content: space-between;">
-        <h2>Hello, <span style="color:green; "><?= htmlspecialchars($user) ?></span>!</h2>
+        <h2>👋 Hello, <span style="color:green; "><?= htmlspecialchars($user) ?></span>!</h2>
 
 
 
-        <button type="button" style="padding: 12px 24px; cursor: pointer; border: 1px solid #000000; background-color: #D3D3D3; color: #000000; font-size: 16px; border-radius: 5px; transition: background-color 0.3s ease; " onclick=login();>Login</button>
+        <button type="button" style="width: 90px; background: black; color: white; font-size: large; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" onclick=login();>Login</button>
     </div>
 
-    <h2 class="title"><span style="background-color: black; color: white; padding: 5px; border-radius: 5px; ">></span> Latest content</h2>
+    <h2 class=" title"><span style="background-color: black; color: white; width: 40px; height: 20px; padding: 5px; border-radius: 5px; "> > </span> Latest content</h2>
 
-    <div class="content" style="border: 2px solid black; padding: 25px;">
+    <div class="content" style="width: 100%; min-width: 320px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); ">
         <ul style="list-style: none;">
             <?php foreach ($posts as $post) : ?>
-
-                <li>
-                    <form action="<?php '/posts'; ?>" method="DELETE" onsubmit="return confirm('Your post is going to be deleted ...'); <?php  ?> ">
-                        <a href="/posts/<?= $post['id'];
-                                        ?>"><?= htmlspecialchars($post['title']); ?></a>
-                        <p><?= htmlspecialchars($post['content']); ?></p>
-                        <p><em><strong>author</strong></em> : <span style="color: green; font-weight: bold;"><?= htmlspecialchars($post['author']); ?></span></p>
-                        <p><em>date_created</em>: <?= htmlspecialchars($post['date_created']); ?></p>
-                        <?php if ($user === $post['author']):  ?>
-                            <input type="submit" name="<?= $post['id']; ?>" value="delete" style="cursor: pointer;">
-                        <?php endif; ?>
-                        <hr>
+                <li style="max-height: fit-content;">
+                    <form action="<?php '/posts'; ?>" method="DELETE" onsubmit="return confirm('Your post is going to be deleted ...');">
+                        <a style="font-size: larger;" href="/api/posts">
+                            <?= htmlspecialchars($post['title']); ?></a>
+                        <div style="width: 90%; min-width: 320px; background: #fff; color: black; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); ">
+                            <p class="post-content"><?= htmlspecialchars($post['content']); ?></p>
+                            <p><em><strong>author</strong></em> : <span style="color: green; font-weight: bold;"><?= htmlspecialchars($post['author']); ?></span></p>
+                            <p><em>date_created</em>: <?= htmlspecialchars($post['date_created']); ?></p>
+                            <?php if ($user === $post['author']):  ?>
+                                <input type="submit" name="<?= $post['id']; ?>" value="delete" style="cursor: pointer;">
+                            <?php endif; ?>
+                        </div>
                     </form>
                 </li>
             <?php endforeach; ?>
@@ -102,11 +100,14 @@ if (session_status() === PHP_SESSION_NONE) {
         function login() {
             axios.post('/api/login')
                 .then(response => {
-                    confirm('You are now logged in');
+                    // You can handle the response here if needed
+
                     window.location.href = '/api/login';
+                    // Optionally, reload the page
+                    // window.location.reload();
                 })
                 .catch(error => {
-                    console.error('There was an error logging in:', error);
+                    console.error('There was an error clearing the session:', error);
                 });
         }
     </script>
