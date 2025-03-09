@@ -52,7 +52,6 @@ class Router
                         echo PHP_EOL;
                         echo $_SESSION['user'] . ' has been logged out ...';
 
-
                         $api_key = bin2hex(random_bytes(32));
 
                         setcookie('guest_session_token', $api_key, [
@@ -73,6 +72,7 @@ class Router
                 default:
                     http_response_code(405);
                     header("Allow: GET");
+                    require_once BASE_PATH . '/app/Views/405.view.php';
             }
         } elseif ($resource === "posts") {
             switch ($method) {
@@ -80,9 +80,21 @@ class Router
                     header('Location: /');
                     break;
                 case 'POST':
-                    echo json_encode(['msg' => "Creating new post"]);
                     // TODO authenticate first ...
-
+                    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === 1) {
+                        // TODO check if user is logged in
+                        // clear session
+                        // generate API-TOKEN again ??
+                        echo json_encode([
+                            "message" => "submitting a post...",
+                            "user" => $_SESSION['user'],
+                            'logged_in' => $_SESSION['logged_in'],
+                        ]);
+                    } else {
+                        echo json_encode([
+                            "message" => "You are not logged in"
+                        ]);
+                    }
                     break;
                 default:
                     http_response_code(405);
@@ -90,9 +102,33 @@ class Router
                     header('Content-Type: text/html');
                     require_once BASE_PATH . '/app/Views/405.view.php';
             }
-        } elseif ($resource ===  'clear_session' && $method === 'POST') {
-            setcookie('guest_session_token', '', time() - 3600, '/');
-            header('Location: /');
+        } elseif ($resource === 'login') {
+            switch ($method) {
+                case 'POST':
+                case  'GET':
+                    header('Content-Type: text/html');
+                    require_once BASE_PATH . '/app/Views/Login.view.php';
+                    break;
+                default:
+                    http_response_code(405);
+                    header("Allow: POST");
+                    header('Content-Type: text/html');
+                    require_once BASE_PATH . '/app/Views/405.view.php';
+            }
+        } elseif ($resource ===  'clear_session') {
+            switch ($method) {
+                case 'POST':
+                    setcookie('guest_session_token', '', time() - 3600, '/');
+                    setcookie("session_token", "", time() - 3600, "/");
+                    setcookie("session_token", "", time() - 3600, "/", domain: "", secure: false, httponly: true);
+                    header('Location: /');
+                    break;
+                default:
+                    http_response_code(405);
+                    header("Allow: POST");
+                    header('Content-Type: text/html');
+                    require_once BASE_PATH . '/app/Views/405.view.php';
+            }
         } else {
             http_response_code(404);
             header('Allow: POST');

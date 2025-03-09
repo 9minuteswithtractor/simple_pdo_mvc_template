@@ -90,7 +90,7 @@ if (session_status() === PHP_SESSION_NONE) {
             axios.post('/api/clear_session')
                 .then(response => {
                     // You can handle the response here if needed
-                    alert('Session cleared and cookies destroyed!');
+                    confirm('Session cleared and cookies destroyed!');
                     // Optionally, reload the page
                     window.location.reload();
                 })
@@ -103,6 +103,7 @@ if (session_status() === PHP_SESSION_NONE) {
             axios.post('/api/login')
                 .then(response => {
                     confirm('You are now logged in');
+                    window.location.href = '/api/login';
                 })
                 .catch(error => {
                     console.error('There was an error logging in:', error);
