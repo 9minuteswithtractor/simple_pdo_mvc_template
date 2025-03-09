@@ -30,6 +30,7 @@ class PostController
 
         $user = $_SESSION['user'];
 
+
         $posts = $postModel->getAll();
 
 

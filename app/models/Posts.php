@@ -9,7 +9,7 @@ class Posts
 {
     private PDO $conn;
 
-    public function __construct($db)
+    public function __construct(Database | PDO $db)
     {
         $this->conn = $db->getConnection();
     }
