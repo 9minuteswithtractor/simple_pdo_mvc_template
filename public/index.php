@@ -40,14 +40,14 @@ use App\Core\App;
 
 
 // simple method pre-check
-$allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'];
+$allowed_methods = ['GET', 'POST', 'PUT', 'DELETE'];
 if (!in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
     http_response_code(405);
 
-    header('Allow: GET, POST, PATCH, DELETE, OPTIONS');
+    header('Allow: GET, POST, PUT, DELETE');
     // require_once BASE_PATH . '/app/Views/405.php';
     header('Content-Type: text/html');
-    require_once BASE_PATH . '/app/Views/405.php';
+    require_once BASE_PATH . '/app/Views/405.view.php';
     exit;
 }
 

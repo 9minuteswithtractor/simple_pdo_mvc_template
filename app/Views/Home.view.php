@@ -53,11 +53,11 @@ if (session_status() === PHP_SESSION_NONE) {
         <p hidden style="margin: 50px 50px;"><?= print_r($info) ?></p>
     </div>
     <div style="display: flex; padding: 0.1rem; width: 70vw; align-items: center; justify-content: space-between;">
-        <h2>Hello, <span style="color:green;"><?= htmlspecialchars($user) ?></span>!</h2>
+        <h2>Hello, <span style="color:green; "><?= htmlspecialchars($user) ?></span>!</h2>
 
 
 
-        <button type="button" style="padding: 12px 24px; cursor: pointer; border: 1px solid #000000; background-color: #D3D3D3; color: #000000; font-size: 16px; border-radius: 5px; transition: background-color 0.3s ease; " onclick="window.location.href='/login'">Login</button>
+        <button type="button" style="padding: 12px 24px; cursor: pointer; border: 1px solid #000000; background-color: #D3D3D3; color: #000000; font-size: 16px; border-radius: 5px; transition: background-color 0.3s ease; " onclick=login();>Login</button>
     </div>
 
     <h2 class="title"><span style="background-color: black; color: white; padding: 5px; border-radius: 5px; ">></span> Latest content</h2>
@@ -96,6 +96,16 @@ if (session_status() === PHP_SESSION_NONE) {
                 })
                 .catch(error => {
                     console.error('There was an error clearing the session:', error);
+                });
+        }
+
+        function login() {
+            axios.post('/api/login')
+                .then(response => {
+                    confirm('You are now logged in');
+                })
+                .catch(error => {
+                    console.error('There was an error logging in:', error);
                 });
         }
     </script>
