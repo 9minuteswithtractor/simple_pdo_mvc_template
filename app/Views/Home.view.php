@@ -53,8 +53,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <div style="display: flex; padding: 0.1rem; width: 70vw; align-items: center; justify-content: space-between;">
         <h2>👋 Hello, <span style="color:green; "><?= htmlspecialchars($user) ?></span>!</h2>
 
-
-
         <button type="button" style="width: 90px; background: black; color: white; font-size: large; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" onclick=login();>Login</button>
     </div>
 
@@ -64,7 +62,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <ul style="list-style: none;">
             <?php foreach ($posts as $post) : ?>
                 <li style="max-height: fit-content;">
-                    <form action="<?php '/posts'; ?>" method="DELETE" onsubmit="return confirm('Your post is going to be deleted ...');">
+                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="DELETE" onsubmit="return confirm('Your post is going to be deleted ...');">
                         <a style="font-size: larger;" href="/api/posts">
                             <?= htmlspecialchars($post['title']); ?></a>
                         <div style="width: 90%; min-width: 320px; background: #fff; color: black; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); ">

@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 use App\Core\Database;
+use App\Controllers\Auth;
 use App\Controllers\PostController;
 
 
@@ -19,7 +20,6 @@ class Router
         // echo 'Router created';
 
     }
-
 
     /**
      * Summary of route
@@ -40,35 +40,37 @@ class Router
         if ($path === '/') {
             switch ($method) {
                 case 'GET':
-                    // Default_Mode :
-                    // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-._.-.::___GUEST_MODE
-                    $mode = $_SESSION['user'] = 'guest';
-                    $logged_in = $_SESSION['logged_in'] = 0;
-                    $db_storage = $_SESSION['db_storage'] =  $_ENV['STORAGE_TYPE'];
-                    // ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-.::___GUEST_MODE_END
+                    if (!empty($_SESSION['user']) && $_SESSION['logged_in'] === 1) {
 
-                    // TODO could be refactored into helper-function if time ...
-                    if (!isset($_COOKIE['guest_session_token'])) {
-                        echo PHP_EOL;
-                        echo $_SESSION['user'] . ' has been logged out ...';
-
-                        $api_key = bin2hex(random_bytes(32));
-
-                        setcookie('guest_session_token', $api_key, [
-                            'expires' => time() + 3600, // 1 hour
-                            'path' => '/',
-                            'domain' => '',
-                            // 'secure' => true, ??
-                            'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
-                            'httponly' => true,
-                            'samesite' => 'Strict'
-                        ]);
-                        echo PHP_EOL;
-                        echo "New API Key Set: " . $api_key;
-                    } else {
                         PostController::index($db);
+                    } else {
+                        echo "You are browsing as a guest.";
+                        $_SESSION['user'] = 'guest';
+                        $_SESSION['logged_in'] = 0;
+                        $_SESSION['db_storage'] = $_ENV['STORAGE_TYPE'];
+
+                        if (!isset($_COOKIE['guest_session_token'])) {
+                            echo PHP_EOL;
+                            echo $_SESSION['user'] . ' has been logged out ...';
+
+                            $api_key = bin2hex(random_bytes(32));
+
+                            setcookie('guest_session_token', $api_key, [
+                                'expires' => time() + 3600, // 1 hour
+                                'path' => '/',
+                                'domain' => '',
+                                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                                'httponly' => true,
+                                'samesite' => 'Strict'
+                            ]);
+                            echo PHP_EOL;
+                            echo "New API Key Set: " . $api_key;
+                        }
                     }
+
+                    PostController::index($db);
                     break;
+
                 default:
                     http_response_code(405);
                     header("Allow: GET");
@@ -114,8 +116,48 @@ class Router
                         $username = $_POST['username'];
                         $password = $_POST['password'];
 
+                        $auth_controller = new Auth($db);
+                        $login_success = $auth_controller->login($username, $password);
 
-                        // Example: Authenticate user (replace with actual authentication logic)
+                        if ($login_success) {
+
+                            // ::_.-._.-._.-._.-._.-._._.-::__CLEAR_GUEST_COOKIE
+                            setcookie('guest_session_token', '', time() - 3600, '/');
+                            setcookie("session_token", "", time() - 3600, "/");
+                            setcookie("session_token", "", time() - 3600, "/", domain: "", secure: false, httponly: true);
+                            // ::_.-._.-._.-._.-._.-.-::__CLEAR_GUEST_COOKIE_END
+
+                            // ::_.-._.-._.-._.-._.-._._.-._-._.-.::___USER_MODE
+
+                            // setting cookies ::
+                            setcookie('session_token', bin2hex(random_bytes(32)), [
+                                'expires' => time() + 3600, // 1 hour
+                                'path' => '/',
+                                'domain' => '',
+                                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                                'httponly' => true,
+                                'samesite' => 'Strict'
+                            ]);
+
+                            // setting session
+                            $_SESSION['user'] = $username;
+                            $_SESSION['logged_in'] = 1;
+                            $_SESSION['db_storage'] =  $_ENV['STORAGE_TYPE'];
+                            // ::_.-._.-._.-._.-._.-._._.-._-.::___USER_MODE_END
+                            header('Location: /');
+                            echo json_encode([
+                                "message" => "Login successful",
+                                "user" => $_SESSION['user'],
+                                "logged_in" => $_SESSION['logged_in']
+                            ]);
+
+                            // exit;
+                        } else {
+                            echo "Invalid username or password.";
+                            header('Content-Type: text/html');
+                            require_once BASE_PATH . '/app/Views/Login.view.php';
+                            exit;
+                        }
 
                         if ($username === 'admin' && $password === 'password') { // Replace with real auth check
                             $_SESSION['user'] = $username;

@@ -19,7 +19,6 @@ if (session_status() === PHP_SESSION_NONE) {
 <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f3f4f6; margin: 0;">
     <div style="width: 100%; max-width: 320px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
         <h2 style="margin-bottom: 20px; color: #333;">Login</h2>
-
         <form action="/api/login" method="POST">
             <div class="login-form" style="margin-bottom: 15px; text-align: left;">
                 <label for="username" style="display: block; font-size: 14px; color: #555;">Username</label>

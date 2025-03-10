@@ -16,7 +16,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div style="width: 100%; max-width: 320px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
         <h2 style="margin-bottom: 20px; color: #333;">Register</h2>
-
         <form action="/api/register" method="POST">
             <div style="margin-bottom: 15px; text-align: left;">
                 <label for="username" style="display: block; font-size: 14px; color: #555;">Username</label>

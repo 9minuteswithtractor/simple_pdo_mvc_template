@@ -21,7 +21,6 @@ define('DEV_ENV_PATH', BASE_PATH . '/.env');
 // 2. Load environment variables before any application logic
 if (file_exists(DEV_ENV_PATH)) {
     $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
-    // $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH, '.env');
     $dotenv->load();
 } else {
     http_response_code(500);

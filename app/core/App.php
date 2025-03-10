@@ -6,6 +6,7 @@ use App\Core\Router;
 use App\Core\Database;
 use Throwable;
 
+define('BASE_URL', $_ENV['BASE_URL']);
 require_once BASE_PATH . '/vendor/autoload.php';
 
 class App
@@ -25,8 +26,9 @@ class App
         try {
             if ($this->db->getConnection()) {
                 define('API_BASE_URL', $_ENV['API_BASE_URL']);
-                define('BASE_URL', $_ENV['BASE_URL']);
+                // ROUTER ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.-.::___ROUTER
                 $this->router->route($this->db);
+                // ROUTER ::_.-._.-._.-._.-._.-._._.-._-._.-._.-.::___END_ROUTER
             } else {
                 http_response_code(500);
                 header('Content-Type: text/html');

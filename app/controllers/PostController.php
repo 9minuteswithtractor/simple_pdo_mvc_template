@@ -26,13 +26,9 @@ class PostController
             'session' => $_SESSION,
             'cookie' => $_COOKIE,
         ];
-
-
         $user = $_SESSION['user'];
-
-
+        $status = $_SESSION['logged_in'];
         $posts = $postModel->getAll();
-
 
         header('Content-Type: text/html');
         require_once BASE_PATH . '/app/Views/Home.view.php';
